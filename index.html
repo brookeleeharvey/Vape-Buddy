@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Share+Tech+Mono&family=Rubik+Glitch&display=swap" rel="stylesheet">
+<style>
+
+:root {
+--acid-pink:    #ff00cc;
+--acid-cyan:    #00ffee;
+--acid-yellow:  #ffee00;
+--acid-green:   #39ff14;
+--acid-orange:  #ff6600;
+--acid-purple:  #cc00ff;
+--deep-bg:      #050008;
+--card-bg:      rgba(8, 0, 20, 0.93);
+--text-main:    #f0e0ff;
+--text-dim:     #c090e0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@keyframes bgShift {
+0%   { background-position: 0% 0%; }
+25%  { background-position: 100% 0%; }
+50%  { background-position: 100% 100%; }
+75%  { background-position: 0% 100%; }
+100% { background-position: 0% 0%; }
+}
+@keyframes rainbowBorder {
+0%   { border-color: var(--acid-pink);   box-shadow: 0 0 30px var(--acid-pink),   0 0 80px rgba(255,0,204,0.35),   inset 0 0 20px rgba(255,0,204,0.07); }
+16%  { border-color: var(--acid-orange); box-shadow: 0 0 30px var(--acid-orange), 0 0 80px rgba(255,102,0,0.35),   inset 0 0 20px rgba(255,102,0,0.07); }
+33%  { border-color: var(--acid-yellow); box-shadow: 0 0 30px var(--acid-yellow), 0 0 80px rgba(255,238,0,0.35),   inset 0 0 20px rgba(255,238,0,0.07); }
+50%  { border-color: var(--acid-green);  box-shadow: 0 0 30px var(--acid-green),  0 0 80px rgba(57,255,20,0.35),   inset 0 0 20px rgba(57,255,20,0.07); }
+66%  { border-color: var(--acid-cyan);   box-shadow: 0 0 30px var(--acid-cyan),   0 0 80px rgba(0,255,238,0.35),   inset 0 0 20px rgba(0,255,238,0.07); }
+83%  { border-color: var(--acid-purple); box-shadow: 0 0 30px var(--acid-purple), 0 0 80px rgba(204,0,255,0.35),   inset 0 0 20px rgba(204,0,255,0.07); }
+100% { border-color: var(--acid-pink);   box-shadow: 0 0 30px var(--acid-pink),   0 0 80px rgba(255,0,204,0.35),   inset 0 0 20px rgba(255,0,204,0.07); }
+}
+@keyframes titleGlitch {
+0%,88%,100% { text-shadow: 0 0 10px var(--acid-pink), 0 0 40px var(--acid-pink), 0 0 80px var(--acid-purple); color: var(--acid-pink); transform: translateX(0) skewX(0deg); }
+90% { transform: translateX(-4px) skewX(-3deg); text-shadow: -4px 0 var(--acid-cyan), 4px 0 var(--acid-orange); }
+92% { transform: translateX(4px)  skewX(3deg);  text-shadow: 4px 0 var(--acid-green), -4px 0 var(--acid-purple); }
+94% { color: var(--acid-yellow); text-shadow: 0 0 10px var(--acid-yellow), 0 0 40px var(--acid-orange); transform: translateX(0); }
+25% { color: var(--acid-cyan);   text-shadow: 0 0 10px var(--acid-cyan),   0 0 40px var(--acid-cyan),   0 0 80px var(--acid-green); }
+50% { color: var(--acid-yellow); text-shadow: 0 0 10px var(--acid-yellow), 0 0 40px var(--acid-orange), 0 0 80px var(--acid-yellow); }
+75% { color: var(--acid-green);  text-shadow: 0 0 10px var(--acid-green),  0 0 40px var(--acid-green),  0 0 80px var(--acid-cyan); }
+}
+@keyframes floatBob {
+0%,100% { transform: translateY(0px) rotate(-0.5deg); }
+33%     { transform: translateY(-7px) rotate(0.5deg); }
+66%     { transform: translateY(-3px) rotate(-0.3deg); }
+}
+@keyframes prismaticFlow {
+0%   { background-position: 0% 50%; }
+50%  { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+@keyframes textRainbow {
+0%   { color: var(--acid-pink);   text-shadow: 0 0 10px var(--acid-pink); }
+16%  { color: var(--acid-orange); text-shadow: 0 0 10px var(--acid-orange); }
+33%  { color: var(--acid-yellow); text-shadow: 0 0 10px var(--acid-yellow); }
+50%  { color: var(--acid-green);  text-shadow: 0 0 10px var(--acid-green); }
+66%  { color: var(--acid-cyan);   text-shadow: 0 0 10px var(--acid-cyan); }
+83%  { color: var(--acid-purple); text-shadow: 0 0 10px var(--acid-purple); }
+100% { color: var(--acid-pink);   text-shadow: 0 0 10px var(--acid-pink); }
+}
+@keyframes spinSlow    { from { transform: rotate(0deg); }  to { transform: rotate(360deg); } }
+@keyframes spinReverse { from { transform: rotate(0deg); }  to { transform: rotate(-360deg); } }
+@keyframes orbFloat1 {
+0%,100% { transform: translate(0,0) scale(1); opacity:.3; }
+33%     { transform: translate(60px,-40px) scale(1.3); opacity:.5; }
+66%     { transform: translate(-30px,50px) scale(.8); opacity:.2; }
+}
+@keyframes orbFloat2 {
+0%,100% { transform: translate(0,0) scale(1); opacity:.25; }
+40%     { transform: translate(-80px,30px) scale(1.4); opacity:.45; }
+70%     { transform: translate(40px,-60px) scale(.7); opacity:.15; }
+}
+@keyframes orbFloat3 {
+0%,100% { transform: translate(-50%,-50%) scale(1); opacity:.18; }
+50%     { transform: translate(-50%,-50%) scale(1.5); opacity:.35; }
+}
+@keyframes sectionPulse {
+0%,100% { background: rgba(255,0,204,0.025); }
+50%     { background: rgba(0,255,238,0.04); }
+}
+@keyframes labelFlicker {
+0%,98%,100% { opacity:1; }
+99% { opacity:0.4; }
+}
+@keyframes borderMarch {
+0%   { background-position: 0 0, 100% 0, 100% 100%, 0 100%; }
+100% { background-position: 200px 0, 100% 200px, -200px 100%, 0 -200px; }
+}
+@keyframes appTabPulse {
+0%,100% { box-shadow: inset 0 -3px 0 var(--acid-pink), 0 0 16px rgba(255,0,204,0.3); }
+50%     { box-shadow: inset 0 -3px 0 var(--acid-pink), 0 0 32px rgba(255,0,204,0.6); }
+}
+@keyframes wireTabPulse {
+0%,100% { box-shadow: inset 0 0 12px rgba(0,255,238,0.3); }
+50%     { box-shadow: inset 0 0 24px rgba(0,255,238,0.6); }
+}
+@keyframes fadeInModal {
+from { opacity:0; transform: scale(0.94) translateY(-10px); }
+to   { opacity:1; transform: scale(1) translateY(0); }
+}
+@keyframes slideIn {
+from { opacity:0; transform: translateY(12px); }
+to   { opacity:1; transform: translateY(0); }
+}
+@keyframes bannerShift {
+0%,100% { background: rgba(255,238,0,0.05); }
+50%     { background: rgba(0,255,238,0.07); }
+}
+@keyframes subtitleCycle {
+0%,100% { color: var(--acid-pink);   text-shadow: 0 0 12px var(--acid-pink); }
+33%     { color: var(--acid-cyan);   text-shadow: 0 0 12px var(--acid-cyan); }
+66%     { color: var(--acid-yellow); text-shadow: 0 0 12px var(--acid-yellow); }
+}
+@keyframes transformTabPulse {
+0%,100% { box-shadow: inset 0 0 12px rgba(255,238,0,0.3); }
+50%     { box-shadow: inset 0 0 24px rgba(255,238,0,0.6); }
+}
+
+.jt-section {
+padding: 15px 18px 17px;
+position: relative; z-index: 1;
+border-bottom: 1px solid rgba(255,0,204,0.2);
+}
+.jt-section::before {
+content: ''; position: absolute; inset: 0;
+background-image: linear-gradient(rgba(0,255,238,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,238,0.03) 1px, transparent 1px);
+background-size: 24px 24px; pointer-events: none;
+}
+.jt-section:nth-child(2) { animation: sectionPulse 5s ease-in-out 0s infinite; }
+.jt-section:nth-child(4) { animation: sectionPulse 5s ease-in-out 1.7s infinite; }
+.jt-section:nth-child(6) { animation: sectionPulse 5s ease-in-out 3.3s infinite; }
+.jt-subtitle {
+font-family: 'Bungee', cursive; font-size: 13px;
+letter-spacing: 2px; text-transform: uppercase;
+animation: subtitleCycle 6s ease-in-out infinite;
+margin-bottom: 14px; position: relative; z-index: 1;
+}
+.jt-controls { display: flex; flex-wrap: wrap; gap: 14px; position: relative; z-index: 1; }
+.jt-control { display: flex; flex-direction: column; min-width: 130px; flex: 1; gap: 6px; }
+.jt-control label { font-size: 10px; color: var(--acid-cyan); letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 8px var(--acid-cyan); }
+.jt-control label span { color: var(--acid-yellow); text-shadow: 0 0 8px var(--acid-yellow); font-size: 11px; }
+.jt-info {
+margin-top: 12px; font-size: 12px; color: var(--text-dim);
+position: relative; z-index: 1;
+background: rgba(0,0,0,0.3);
+border: 1px solid rgba(255,0,204,0.2); border-radius: 8px;
+padding: 9px 12px; line-height: 1.7;
+box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
+}
+.jt-info span[id] { color: var(--acid-yellow); text-shadow: 0 0 8px var(--acid-yellow); font-weight: bold; }
+.jt-result-list { list-style: none; padding: 0; margin: 0; position: relative; z-index: 1; }
+.jt-result-list li {
+display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+padding: 7px 10px; border-bottom: 1px dashed rgba(255,0,204,0.15);
+font-size: 12px; color: var(--text-dim); border-radius: 4px; transition: background 0.2s;
+}
+.jt-result-list li:last-child { border-bottom: none; }
+.jt-result-list li:hover { background: rgba(255,0,204,0.05); }
+.jt-result-label { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--acid-cyan); text-shadow: 0 0 8px var(--acid-cyan); min-width: 78px; flex-shrink: 0; }
+.jt-result-value { font-family: 'Bungee', cursive; font-size: 14px; color: var(--acid-yellow); text-shadow: 0 0 10px var(--acid-yellow), 0 0 20px rgba(255,238,0,0.4); }
+.sol-ok   { color: var(--acid-green);  text-shadow: 0 0 10px var(--acid-green);  font-family:'Bungee',cursive; font-size:12px; }
+.sol-warn { color: var(--acid-orange); text-shadow: 0 0 10px var(--acid-orange); font-family:'Bungee',cursive; font-size:12px; }
+.sol-bad  { color: #ff2020; text-shadow: 0 0 12px #ff2020, 0 0 24px rgba(255,0,0,0.5); font-family:'Bungee',cursive; font-size:12px; }
+
+body {
+font-family: 'Share Tech Mono', monospace;
+background-color: var(--deep-bg);
+background-image:
+  radial-gradient(ellipse at 15% 15%, rgba(204,0,255,0.25) 0%, transparent 50%),
+  radial-gradient(ellipse at 85% 85%, rgba(0,255,238,0.2)  0%, transparent 50%),
+  radial-gradient(ellipse at 50% 50%, rgba(255,0,204,0.12) 0%, transparent 65%),
+  radial-gradient(ellipse at 80% 20%, rgba(57,255,20,0.15) 0%, transparent 45%),
+  radial-gradient(ellipse at 20% 80%, rgba(255,102,0,0.15) 0%, transparent 45%);
+min-height: 100vh;
+display: flex; justify-content: center; align-items: flex-start;
+padding: 20px 10px 60px;
+color: var(--text-main);
+overflow-x: hidden;
+}
+body::before {
+content: ''; position: fixed; inset: 0;
+background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, rgba(0,0,0,0.22) 2px, rgba(0,0,0,0.22) 3px);
+pointer-events: none; z-index: 9999;
+}
+body::after {
+content: ''; position: fixed; width: 300px; height: 300px; border-radius: 50%;
+background: radial-gradient(circle, rgba(204,0,255,0.3), transparent 70%);
+top: 10%; left: 5%; pointer-events: none; z-index: 0;
+animation: orbFloat1 12s ease-in-out infinite; filter: blur(20px);
+}
+.orb-layer { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.orb-layer::before {
+content: ''; position: absolute; width: 400px; height: 400px; border-radius: 50%;
+background: radial-gradient(circle, rgba(0,255,238,0.2), transparent 70%);
+bottom: 5%; right: 5%; animation: orbFloat2 15s ease-in-out infinite; filter: blur(30px);
+}
+.orb-layer::after {
+content: ''; position: absolute; width: 250px; height: 250px; border-radius: 50%;
+background: radial-gradient(circle, rgba(57,255,20,0.18), transparent 70%);
+top: 50%; left: 50%; transform: translate(-50%,-50%);
+animation: orbFloat3 10s ease-in-out infinite; filter: blur(25px);
+}
+
+#app-card {
+width: 100%; max-width: 490px;
+position: relative; z-index: 1;
+background: var(--card-bg);
+border: 2px solid var(--acid-pink);
+border-radius: 20px; overflow: hidden;
+animation: rainbowBorder 3s linear infinite;
+backdrop-filter: blur(12px);
+}
+#app-card::after {
+content: ''; position: absolute; inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none; z-index: 0; opacity: 0.5;
+}
+
+.header-zone {
+background: linear-gradient(135deg, #1e0040 0%, #00122e 40%, #0a001e 60%, #1e0040 100%);
+background-size: 300% 300%; animation: bgShift 8s ease infinite;
+padding: 20px 20px 14px; text-align: center;
+border-bottom: 1px solid rgba(255,0,204,0.5);
+position: relative; overflow: hidden;
+}
+.header-zone::before {
+content: ''; position: absolute; inset: 0;
+background:
+  repeating-linear-gradient(45deg,  transparent, transparent 10px, rgba(255,0,204,0.06) 10px, rgba(255,0,204,0.06) 11px),
+  repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,255,238,0.04) 10px, rgba(0,255,238,0.04) 11px);
+}
+.header-zone::after {
+content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%;
+border: 1px solid rgba(255,0,204,0.15);
+top: 50%; left: 50%; transform: translate(-50%,-50%);
+animation: spinSlow 20s linear infinite; pointer-events: none;
+}
+.corner-deco {
+position: absolute; width: 32px; height: 32px;
+border: 2px solid var(--acid-cyan); transform: rotate(45deg); opacity: 0.7; z-index: 2;
+}
+.corner-deco::after { content: ''; position: absolute; inset: 4px; border: 1px solid var(--acid-pink); opacity: 0.6; }
+.corner-deco.tl { top: 10px; left: 10px; animation: spinSlow 8s linear infinite; }
+.corner-deco.tr { top: 10px; right: 10px; animation: spinReverse 6s linear infinite; }
+.suite-title {
+font-family: 'Rubik Glitch', 'Bungee', cursive;
+font-size: 30px; letter-spacing: 4px; display: block; position: relative; z-index: 1;
+animation: titleGlitch 4s ease-in-out infinite, floatBob 5s ease-in-out infinite;
+}
+.suite-sub {
+font-size: 10px; letter-spacing: 6px; text-transform: uppercase;
+margin-top: 5px; opacity: 0.9; position: relative; z-index: 1;
+animation: textRainbow 6s linear infinite;
+}
+
+.app-tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 2px solid rgba(255,0,204,0.35); position: relative; z-index: 1; }
+.app-tab {
+padding: 14px 10px; font-family: 'Bungee', cursive;
+font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+border: none; cursor: pointer; background: rgba(0,0,0,0.5); color: var(--text-dim);
+transition: all 0.2s; outline: none;
+border-right: 1px solid rgba(255,0,204,0.2); position: relative; z-index: 1;
+}
+.app-tab:last-child { border-right: none; }
+.app-tab .tab-icon { font-size: 18px; display: block; margin-bottom: 2px; }
+.app-tab .tab-name { font-size: 11px; letter-spacing: 2.5px; }
+.app-tab.active-wire {
+background: linear-gradient(135deg, rgba(0,255,238,0.15), rgba(57,255,20,0.1));
+color: var(--acid-cyan); text-shadow: 0 0 10px var(--acid-cyan), 0 0 20px var(--acid-cyan);
+animation: wireTabPulse 2s ease-in-out infinite;
+}
+.app-tab.active-juice {
+background: linear-gradient(135deg, rgba(255,0,204,0.15), rgba(204,0,255,0.1));
+color: var(--acid-pink); text-shadow: 0 0 10px var(--acid-pink), 0 0 20px var(--acid-pink);
+animation: appTabPulse 2s ease-in-out infinite;
+}
+.app-tab.active-transform {
+background: linear-gradient(135deg, rgba(255,238,0,0.12), rgba(255,102,0,0.1));
+color: var(--acid-yellow); text-shadow: 0 0 10px var(--acid-yellow), 0 0 20px var(--acid-yellow);
+animation: transformTabPulse 2s ease-in-out infinite;
+}
+.app-tab:not(.active-wire):not(.active-juice):hover { background: rgba(255,238,0,0.06); color: var(--acid-yellow); text-shadow: 0 0 8px var(--acid-yellow); }
+
+.psycho-divider {
+height: 4px;
+background: linear-gradient(90deg, var(--acid-pink), var(--acid-orange), var(--acid-yellow), var(--acid-green), var(--acid-cyan), var(--acid-purple), var(--acid-pink));
+background-size: 300% 100%; animation: prismaticFlow 2s linear infinite; position: relative;
+}
+.psycho-divider::after { content: ''; position: absolute; inset: 0; background: inherit; filter: blur(4px); opacity: 0.8; }
+
+.app-panel { display: none; animation: slideIn 0.3s ease; }
+.app-panel.visible { display: block; }
+
+.section {
+padding: 14px 18px; border-bottom: 1px solid rgba(255,0,204,0.2);
+position: relative; z-index: 1;
+animation: sectionPulse 5s ease-in-out infinite; transition: background 0.3s;
+}
+.section:hover { background: rgba(255,0,204,0.04); }
+.section::before {
+content: ''; position: absolute; inset: 0;
+background:
+  linear-gradient(90deg,  var(--acid-cyan) 50%, transparent 50%) top    / 12px 1px repeat-x,
+  linear-gradient(180deg, var(--acid-cyan) 50%, transparent 50%) right  / 1px 12px repeat-y,
+  linear-gradient(90deg,  var(--acid-pink) 50%, transparent 50%) bottom / 12px 1px repeat-x,
+  linear-gradient(180deg, var(--acid-pink) 50%, transparent 50%) left   / 1px 12px repeat-y;
+opacity: 0; transition: opacity 0.3s; pointer-events: none;
+animation: borderMarch 0.6s linear infinite paused;
+}
+.section:hover::before { opacity: 0.4; animation-play-state: running; }
+.section-title { font-family: 'Bungee', cursive; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 12px; animation: textRainbow 8s linear infinite; }
+.section-label { font-size: 10px; color: var(--acid-cyan); letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 8px var(--acid-cyan); margin-bottom: 8px; display: block; }
+
+.select-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.select-group { display: flex; flex-direction: column; gap: 5px; }
+.select-group label { font-size: 9px; color: var(--acid-cyan); letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 0 8px var(--acid-cyan); animation: labelFlicker 8s ease-in-out infinite; }
+select {
+font-family: 'Share Tech Mono', monospace; font-size: 12px;
+color: var(--acid-yellow); background: rgba(0,0,0,0.7);
+border: 1px solid var(--acid-purple); border-radius: 6px;
+padding: 6px 10px; cursor: pointer; outline: none;
+appearance: none; -webkit-appearance: none;
+transition: border-color 0.2s, box-shadow 0.3s, transform 0.1s;
+box-shadow: 0 0 8px rgba(204,0,255,0.3), inset 0 0 8px rgba(0,0,0,0.5);
+}
+select:hover { border-color: var(--acid-cyan); box-shadow: 0 0 16px var(--acid-cyan), 0 0 32px rgba(0,255,238,0.3); transform: scale(1.03); }
+select:focus { border-color: var(--acid-yellow); box-shadow: 0 0 20px var(--acid-yellow); }
+select:disabled { color: #333; border-color: #222; box-shadow: none; cursor: not-allowed; opacity: 0.4; }
+select option { background: #0a0014; color: var(--acid-yellow); }
+.connector { font-family: 'Bungee', cursive; font-size: 24px; font-weight: bold; padding-bottom: 4px; line-height: 1; animation: textRainbow 4s linear infinite; text-shadow: 0 0 12px currentColor; }
+
+.wire-banner {
+border-bottom: 1px solid rgba(255,0,204,0.2);
+padding: 11px 18px; position: relative; z-index: 1;
+animation: bannerShift 5s ease-in-out infinite; background: rgba(0,0,0,0.3);
+}
+.wire-banner::before {
+content: ''; position: absolute; inset: 0;
+background-image: linear-gradient(rgba(0,255,238,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,238,0.03) 1px, transparent 1px);
+background-size: 20px 20px; pointer-events: none;
+}
+.wire-name { font-size: 13px; color: var(--acid-cyan); text-shadow: 0 0 8px var(--acid-cyan), 0 0 16px var(--acid-cyan); position: relative; z-index: 1; }
+.wire-dim  { font-size: 11px; color: var(--text-dim); margin-top: 3px; position: relative; z-index: 1; }
+
+.config-row { padding: 14px 18px; border-bottom: 1px solid rgba(255,0,204,0.2); background: rgba(0,0,0,0.2); position: relative; z-index: 1; }
+.config-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--acid-cyan); text-shadow: 0 0 8px var(--acid-cyan); margin-bottom: 10px; }
+
+.results-zone {
+padding: 0 18px; border-bottom: 1px solid rgba(255,0,204,0.2);
+background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(255,0,204,0.03) 100%);
+position: relative; z-index: 1;
+}
+.results-zone::before {
+content: ''; position: absolute; inset: 0;
+background-image: linear-gradient(rgba(0,255,238,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,238,0.04) 1px, transparent 1px);
+background-size: 20px 20px; pointer-events: none;
+}
+.result-row {
+display: flex; align-items: baseline; justify-content: space-between;
+padding: 11px 0; border-bottom: 1px dashed rgba(255,0,204,0.12);
+position: relative; z-index: 1; transition: background 0.2s;
+}
+.result-row:last-child { border-bottom: none; }
+.result-row:hover { background: rgba(255,0,204,0.04); border-radius: 4px; padding-left: 4px; padding-right: 4px; }
+.result-label { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--acid-cyan); text-shadow: 0 0 8px var(--acid-cyan); }
+.result-value { font-family: 'Bungee', cursive; font-size: 22px; letter-spacing: 2px; color: var(--acid-yellow); text-shadow: 0 0 10px var(--acid-yellow), 0 0 20px rgba(255,238,0,0.5); }
+.result-value.accent { color: var(--acid-pink); text-shadow: 0 0 10px var(--acid-pink), 0 0 20px rgba(255,0,204,0.5); }
+.result-value.blue   { color: var(--acid-cyan);  text-shadow: 0 0 10px var(--acid-cyan),  0 0 20px rgba(0,255,238,0.5); }
+.power-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.watt-toggle {
+font-family: 'Share Tech Mono', monospace; font-size: 10px; font-weight: bold;
+letter-spacing: 1.5px; text-transform: uppercase;
+background: linear-gradient(135deg, var(--acid-purple), var(--acid-pink), var(--acid-orange));
+background-size: 200% 200%; animation: prismaticFlow 2s ease infinite;
+color: #fff; border: none; border-radius: 6px; padding: 5px 12px; cursor: pointer;
+transition: transform 0.1s, box-shadow 0.2s;
+box-shadow: 0 0 14px var(--acid-purple), 0 0 28px rgba(204,0,255,0.4);
+text-shadow: 0 0 8px rgba(255,255,255,0.8);
+}
+.watt-toggle:hover { transform: scale(1.08) rotate(-1deg); box-shadow: 0 0 24px var(--acid-pink), 0 0 48px rgba(255,0,204,0.5); }
+.watt-toggle:active { transform: scale(0.96); }
+.watt-popup {
+display: none; background: linear-gradient(135deg, #120025, #001830);
+border: 1px solid var(--acid-purple); border-radius: 10px;
+padding: 12px 14px; margin: 4px 0 10px; gap: 8px; align-items: center;
+box-shadow: 0 6px 30px rgba(204,0,255,0.5), 0 0 60px rgba(0,255,238,0.2);
+position: relative; z-index: 10;
+}
+.watt-popup.open { display: flex; animation: fadeInModal 0.2s ease; }
+.watt-popup label { font-size: 10px; color: var(--acid-cyan); letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 0 6px var(--acid-cyan); }
+.watt-popup input {
+font-family: 'Share Tech Mono', monospace; font-size: 13px;
+background: rgba(0,0,0,0.6); border: 1px solid var(--acid-cyan); border-radius: 5px;
+color: var(--acid-yellow); padding: 5px 8px; width: 72px; outline: none; text-align: center;
+box-shadow: 0 0 8px rgba(0,255,238,0.3), inset 0 0 8px rgba(0,0,0,0.5);
+}
+.watt-popup input:focus { box-shadow: 0 0 16px var(--acid-yellow); border-color: var(--acid-yellow); }
+.watt-ok {
+font-family: 'Share Tech Mono', monospace; font-size: 11px;
+background: linear-gradient(135deg, var(--acid-green), var(--acid-cyan));
+color: #000; border: none; border-radius: 5px; padding: 5px 10px;
+cursor: pointer; font-weight: bold; box-shadow: 0 0 12px var(--acid-green);
+transition: transform 0.1s, box-shadow 0.2s;
+}
+.watt-ok:hover { box-shadow: 0 0 24px var(--acid-cyan); transform: scale(1.05); }
+
+.tank-section { padding: 14px 18px; position: relative; z-index: 1; }
+.tank-result {
+background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(57,255,20,0.05), rgba(0,0,0,0.6));
+border: 1px solid var(--acid-green); border-radius: 10px;
+padding: 14px 18px; margin-top: 12px;
+display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+box-shadow: 0 0 20px rgba(57,255,20,0.25), inset 0 0 15px rgba(57,255,20,0.04);
+position: relative; overflow: hidden;
+}
+.tank-result::before {
+content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+background: linear-gradient(90deg, transparent, var(--acid-green), transparent);
+box-shadow: 0 0 10px var(--acid-green);
+}
+.tank-result .big   { font-family: 'Bungee', cursive; font-size: 34px; letter-spacing: 2px; color: var(--acid-green); text-shadow: 0 0 14px var(--acid-green), 0 0 28px rgba(57,255,20,0.5); }
+.tank-result .small { font-size: 11px; color: var(--text-dim); }
+.tank-result .gap-val { font-family: 'Bungee', cursive; font-size: 26px; color: var(--acid-yellow); text-shadow: 0 0 12px var(--acid-yellow); }
+
+.wire-sub-tabs { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(255,0,204,0.2); position: relative; z-index: 1; }
+.wire-sub-tab {
+padding: 11px 10px; font-family: 'Share Tech Mono', monospace;
+font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+border: none; cursor: pointer; background: rgba(0,0,0,0.4);
+color: var(--text-dim); transition: all 0.2s; outline: none;
+border-right: 1px solid rgba(255,0,204,0.2);
+}
+.wire-sub-tab:last-child { border-right: none; }
+.wire-sub-tab.active { background: linear-gradient(135deg, rgba(0,255,238,0.15), rgba(204,0,255,0.1)); color: var(--acid-cyan); text-shadow: 0 0 10px var(--acid-cyan); animation: wireTabPulse 2s ease-in-out infinite; }
+.wire-sub-tab:not(.active):hover { background: rgba(0,255,238,0.06); color: var(--acid-yellow); text-shadow: 0 0 8px var(--acid-yellow); }
+
+.slidecontainer { width: 100%; }
+.slider-label-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+.slider-label-row label { font-size: 11px; color: var(--acid-cyan); letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 8px var(--acid-cyan); }
+input[type="range"] {
+-webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+background: linear-gradient(90deg, var(--acid-purple), var(--acid-pink), var(--acid-cyan));
+background-size: 200% 100%; animation: prismaticFlow 3s linear infinite;
+border-radius: 3px; outline: none; cursor: pointer;
+box-shadow: 0 0 8px rgba(0,255,238,0.3); transition: box-shadow 0.2s;
+}
+input[type="range"]:hover { box-shadow: 0 0 16px var(--acid-cyan), 0 0 32px rgba(0,255,238,0.3); }
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%;
+background: radial-gradient(circle at 40% 40%, var(--acid-yellow), var(--acid-orange));
+cursor: pointer; box-shadow: 0 0 10px var(--acid-yellow), 0 0 20px rgba(255,238,0,0.5);
+border: 2px solid rgba(255,255,255,0.3); transition: transform 0.15s, box-shadow 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); box-shadow: 0 0 20px var(--acid-yellow), 0 0 40px var(--acid-orange); }
+input[type="range"]::-moz-range-thumb {
+width: 22px; height: 22px; border-radius: 50%;
+background: radial-gradient(circle at 40% 40%, var(--acid-yellow), var(--acid-orange));
+cursor: pointer; box-shadow: 0 0 10px var(--acid-yellow); border: 2px solid rgba(255,255,255,0.3);
+}
+
+.textInputField {
+font-family: 'Share Tech Mono', monospace; background: rgba(0,0,0,0.65);
+color: var(--acid-yellow); font-size: 13px; width: 52px;
+padding: 4px 6px; border: 1px solid var(--acid-purple); border-radius: 5px;
+outline: none; box-shadow: 0 0 8px rgba(204,0,255,0.3), inset 0 0 6px rgba(0,0,0,0.5);
+transition: border-color 0.2s, box-shadow 0.2s; vertical-align: middle;
+}
+.textInputField:focus { border-color: var(--acid-cyan); box-shadow: 0 0 14px var(--acid-cyan); }
+input[type="text"][readonly] {
+font-family: 'Share Tech Mono', monospace; background: rgba(0,0,0,0.55);
+color: var(--acid-yellow); font-size: 13px; padding: 5px 8px;
+border: 1px solid var(--acid-purple); border-radius: 5px; outline: none;
+box-shadow: 0 0 8px rgba(204,0,255,0.2); text-shadow: 0 0 8px rgba(255,238,0,0.6);
+}
+
+table { width: 100%; border-collapse: collapse; }
+table td { padding: 5px 4px; vertical-align: middle; }
+table label { font-size: 10px; color: var(--acid-cyan); letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 8px var(--acid-cyan); white-space: nowrap; }
+#lightsImg { text-align: center; padding: 8px; font-family: 'Bungee', cursive; }
+#totalWeightField { display: block; padding: 10px 18px 14px; font-size: 12px; position: relative; z-index: 1; }
+
+.custom-button {
+font-family: 'Share Tech Mono', monospace; font-size: 11px;
+background: linear-gradient(135deg, var(--acid-purple), var(--acid-pink), var(--acid-orange));
+background-size: 200% 200%; animation: prismaticFlow 2.5s ease infinite;
+color: #fff; border: none; border-radius: 7px; padding: 5px 14px;
+cursor: pointer; font-weight: bold; letter-spacing: 1.5px;
+box-shadow: 0 0 14px var(--acid-purple), 0 0 28px rgba(204,0,255,0.4);
+transition: transform 0.15s, box-shadow 0.2s; text-shadow: 0 0 8px rgba(255,255,255,0.7);
+position: absolute; right: 1em; top: 50%; transform: translateY(-50%);
+}
+.custom-button:hover { transform: translateY(-50%) scale(1.08) rotate(-1deg); box-shadow: 0 0 24px var(--acid-pink), 0 0 48px rgba(255,0,204,0.5); color: var(--acid-yellow); }
+.custom-button:active { transform: translateY(-50%) scale(0.96); }
+
+.modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); }
+.modal-content {
+background: linear-gradient(135deg, #120025, #001830, #120025);
+color: var(--text-main); font-family: 'Share Tech Mono', monospace;
+font-size: 12px; line-height: 1.7; margin: 5% auto; padding: 20px 22px;
+border: 2px solid var(--acid-purple); border-radius: 14px; width: 85%; max-width: 480px;
+box-shadow: 0 0 40px rgba(204,0,255,0.5), 0 0 80px rgba(0,255,238,0.2);
+animation: fadeInModal 0.3s ease; position: relative;
+}
+.modal-content::before {
+content: ''; position: absolute; inset: 0;
+background: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(255,0,204,0.03) 12px, rgba(255,0,204,0.03) 13px);
+border-radius: 12px; pointer-events: none;
+}
+.modal-content p { margin-bottom: 10px; color: var(--text-dim); }
+.modal-content p::first-letter { color: var(--acid-cyan); font-size: 1.2em; }
+.modal-title { font-family: 'Bungee', cursive; font-size: 16px; letter-spacing: 2px; animation: textRainbow 4s linear infinite; margin-bottom: 14px; display: block; }
+.close { position: absolute; top: 12px; right: 16px; font-size: 26px; font-weight: bold; color: var(--acid-pink); cursor: pointer; line-height: 1; text-shadow: 0 0 10px var(--acid-pink); transition: color 0.2s, transform 0.2s; }
+.close:hover { color: var(--acid-yellow); text-shadow: 0 0 16px var(--acid-yellow); transform: rotate(90deg) scale(1.2); }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep-bg); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--acid-purple), var(--acid-pink)); border-radius: 3px; }
+
+</style>
+</head>
+<body>
+
+<div class="orb-layer"></div>
+
+<div id="app-card">
+
+  <div class="header-zone">
+    <div class="corner-deco tl"></div>
+    <div class="corner-deco tr"></div>
+    <span class="suite-title">Vape Buddy Suite</span>
+    <div class="suite-sub">◈ &nbsp; Coil &amp; Juice Calculator &nbsp; ◈</div>
+  </div>
+
+  <div class="app-tabs">
+    <button class="app-tab active-wire" id="appTabWire" onclick="showApp('wire')">
+      <span class="tab-icon">🌀</span>
+      <span class="tab-name">Wire Buddy</span>
+    </button>
+    <button class="app-tab" id="appTabJuice" onclick="showApp('juice')">
+      <span class="tab-icon">🧪</span>
+      <span class="tab-name">Juice Buddy</span>
+    </button>
+    <button class="app-tab" id="appTabTransform" onclick="showApp('transform')">
+      <span class="tab-icon">⚗️</span>
+      <span class="tab-name">Transformer</span>
+    </button>
+  </div>
+
+  <div class="psycho-divider"></div>
+
+  <div class="app-panel visible" id="panel-wire">
+
+    <div class="wire-sub-tabs">
+      <button class="wire-sub-tab active" id="tab-mc" onclick="activateMC()">Multi-core Clapton</button>
+      <button class="wire-sub-tab" id="tab-rw" onclick="activateRound()">Round Wire</button>
+    </div>
+
+    <div class="section" id="mc-section">
+      <div class="section-title">Wire Build</div>
+      <div class="select-row">
+        <div class="select-group">
+          <label>Core AWG</label>
+          <select id="coreAWG" onchange="wCalculate()">
+            <option>24</option><option selected>26</option><option>27</option>
+            <option>28</option><option>30</option><option>32</option>
+            <option>34</option><option>36</option><option>38</option><option>40</option>
+          </select>
+        </div>
+        <div class="connector">×</div>
+        <div class="select-group">
+          <label>Cores</label>
+          <select id="numberCores" onchange="wCalculate()">
+            <option>1</option><option selected>2</option><option>3</option>
+            <option>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+        <div class="connector">+</div>
+        <div class="select-group">
+          <label>Wrap AWG</label>
+          <select id="kernelAWG" onchange="wCalculate()">
+            <option>28</option><option>30</option><option>32</option>
+            <option>34</option><option selected>36</option><option>37</option>
+            <option>38</option><option>40</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="rw-section" style="display:none;">
+      <div class="section-title">Wire Build</div>
+      <div class="select-row">
+        <div class="select-group">
+          <label>Wire AWG</label>
+          <select id="roundWireAWG" onchange="wCalculate()">
+            <option>22</option><option>23</option><option>24</option>
+            <option>25</option><option>26</option><option>27</option>
+            <option>28</option><option>29</option><option>30</option>
+            <option>31</option><option selected>32</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="wire-banner">
+      <div class="wire-name" id="wireName">—</div>
+      <div class="wire-dim"  id="wireDim">—</div>
+    </div>
+
+    <div class="psycho-divider"></div>
+
+    <div class="config-row">
+      <div class="config-label">Coil Configuration</div>
+      <div class="select-row">
+        <div class="select-group">
+          <label>Wraps</label>
+          <select id="numberTurnsNew" onchange="wCalculate()">
+            <option>3</option><option>3.5</option><option>4</option><option>4.5</option>
+            <option>5</option><option>5.5</option><option selected>6</option>
+            <option>6.5</option><option>7</option><option>7.5</option><option>8</option>
+            <option>8.5</option><option>9</option><option>9.5</option><option>10</option>
+            <option>10.5</option><option>11</option><option>11.5</option><option>12</option>
+            <option>12.5</option><option>13</option><option>13.5</option><option>14</option>
+            <option>14.5</option><option>15</option><option>15.5</option><option>16</option>
+            <option>16.5</option><option>17</option><option>17.5</option><option>18</option>
+            <option>18.5</option><option>19</option><option>19.5</option><option>20</option>
+          </select>
+        </div>
+        <div class="connector" style="font-size:18px;">@</div>
+        <div class="select-group">
+          <label>Inner Ø</label>
+          <select id="innerDiameter" onchange="wCalculate()">
+            <option>2.5</option><option selected>3.0</option><option>3.5</option>
+            <option>4.0</option><option>4.5</option><option>5.0</option>
+            <option>5.5</option><option>6.0</option>
+          </select>
+        </div>
+        <div style="font-size:11px; color:var(--text-dim); padding-bottom:10px;">mm</div>
+      </div>
+    </div>
+
+    <div class="results-zone">
+      <div class="result-row">
+        <span class="result-label">Coil Width</span>
+        <span class="result-value" id="res-width">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Wick Area</span>
+        <span class="result-value blue" id="res-wick">—</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Max Power</span>
+        <div class="power-row">
+          <span class="result-value accent" id="res-power">—</span>
+          <button class="watt-toggle" onclick="toggleWattPopup()" id="wattBtn">0.343 W/mm²</button>
+        </div>
+      </div>
+      <div class="watt-popup" id="wattPopup">
+        <label>W/mm²</label>
+        <input type="text" id="NewWattsPerMM" value="0.343">
+        <button class="watt-ok" id="OKButton" onclick="OkButtonClick()">OK</button>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Cut Wire To</span>
+        <span class="result-value" id="res-length">—</span>
+      </div>
+    </div>
+
+    <div class="psycho-divider"></div>
+
+    <div class="tank-section">
+      <div class="section-title">Max Wraps for Tank</div>
+      <div class="select-group">
+        <label>Tank Model</label>
+        <select id="tankGaps" onchange="wCalculate()" style="width:100%; min-width:unset;"></select>
+      </div>
+      <div class="tank-result">
+        <span class="big" id="tank-wraps">—</span>
+        <span class="small">wraps max</span>
+        <span style="margin-left:auto; display:flex; align-items:baseline; gap:6px;">
+          <span class="gap-val" id="tank-gap">—</span>
+          <span class="small">left for spacing</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="app-panel" id="panel-juice">
+
+    <div class="section" style="position:relative; padding-right:80px;">
+      <div class="section-title" style="margin-bottom:0; font-size:13px; animation-duration:4s;">D-Juice Calculator &nbsp; v1.12</div>
+      <button type="button" id="helpButton" class="custom-button">Help</button>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <span class="modal-title">◈ How to Use Juice Buddy ◈</span>
+        <p>JuiceBuddy tells you how to make your desired d-juice.</p>
+        <p>Say you need a total of 3.0ml of 1:4 d-juice using 70PG/30VG — adjust the top three sliders (deems ratio can be entered manually) to match these amounts, then read off the PG, VG and deems from the lower text fields.</p>
+        <p>To mix by a certain deems weight and don't know the final volume, adjust the bottom slider or edit the "Deems (mg)" field to match the weight you want to use.</p>
+        <p>A rough solubility guide (deems is insoluble in VG) is included. Note that the volume of PG increases significantly when deems is dissolved in it.</p>
+        <p>When mixing, suggest dissolving the deems in PG first (clean deems dissolves easily at room temp) and then adding the VG.</p>
+        <p>I find it much easier to measure PG and VG by weight, so these are included in the text fields.</p>
+        <p>Please report any bugs or suggestions to Minty via the Discord.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="slidecontainer">
+        <div class="slider-label-row">
+          <label id="total_juice_label">Total Djuice Required</label>
+        </div>
+        <input type="range" min="10" max="70" value="30" id="DJuiceOut">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="slidecontainer">
+        <div class="slider-label-row">
+          <label id="deems_Ratio_label">Deems Ratio (g/ml)</label>
+          <input type="text" class="textInputField" id="DeemsRatioTextIn" value="-" oninput="calculateFromDRatioText(this)">
+        </div>
+        <input type="range" min="5" max="100" value="40" id="DRat">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="slidecontainer">
+        <div class="slider-label-row">
+          <label id="pg_ratio_label">PG/VG Ratio</label>
+        </div>
+        <input type="range" min="0" max="100" value="40" id="PGRat">
+      </div>
+    </div>
+
+    <div class="psycho-divider"></div>
+
+    <div class="section">
+      <table>
+        <tr>
+          <td>
+            <label for="PGmlgField">PG &nbsp;</label>
+            <input type="text" id="PGmlgField" name="PGmlgField" size="16">
+          </td>
+          <td rowspan="2" style="text-align:center; padding-left:10px;" id="lightsImg"></td>
+        </tr>
+        <tr>
+          <td>
+            <label for="VGmlField">VG &nbsp;</label>
+            <input type="text" id="VGmlField" name="VGmlField" size="16">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="DeemsmgFieldNEW">Deems (mg) &nbsp;</label>
+            <input type="text" id="DeemsmgFieldNEW" name="DeemsmgFieldNEW" size="5">
+          </td>
+          <td style="padding-left:10px;">
+            <div class="slidecontainer">
+              <input type="range" style="padding:0;" min="0" max="300" value="40" id="DeemsOutMgSlider">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="psycho-divider"></div>
+    <span id="totalWeightField"></span>
+
+  </div>
+
+  <div class="app-panel" id="panel-transform">
+
+    <div class="section" style="padding:10px 18px; border-bottom:1px solid rgba(255,0,204,0.2); position:relative; z-index:1;">
+      <div class="section-title" style="margin-bottom:0; font-size:13px; animation-duration:4s; letter-spacing:3px;">D-Juice Converter &nbsp; v1.07</div>
+    </div>
+
+    <div class="jt-section">
+      <div class="jt-subtitle">① I have this D-juice…</div>
+      <div class="jt-controls">
+        <div class="jt-control">
+          <label for="jt_input_volume">Total available <span id="jt_input_vol_disp"></span></label>
+          <input type="range" id="jt_input_volume" min="0.5" max="12" step="0.1" value="4">
+        </div>
+        <div class="jt-control">
+          <label for="jt_input_dratio">D-ratio (g:ml) <span id="jt_input_dratio_disp"></span></label>
+          <input type="range" id="jt_input_dratio" min="0.5" max="12" step="0.1" value="4">
+        </div>
+        <div class="jt-control">
+          <label for="jt_input_pgvg">PG/VG <span id="jt_input_pgvg_disp"></span></label>
+          <input type="range" id="jt_input_pgvg" min="0" max="100" step="1" value="40">
+        </div>
+      </div>
+      <div class="jt-info">Per ml, your juice has:&nbsp; <span id="jt_input_details"></span></div>
+    </div>
+
+    <div class="psycho-divider"></div>
+
+    <div class="jt-section">
+      <div class="jt-subtitle">② But I want this…</div>
+      <div class="jt-controls">
+        <div class="jt-control">
+          <label for="jt_output_volume">Required volume <span class="jt_outvol_disp"></span></label>
+          <input type="range" id="jt_output_volume" min="0.5" max="12" step="0.1" value="4">
+        </div>
+        <div class="jt-control">
+          <label for="jt_output_dratio">D-ratio (g:ml) <span id="jt_output_dratio_disp"></span></label>
+          <input type="range" id="jt_output_dratio" min="0.5" max="12" step="0.1" value="4">
+        </div>
+        <div class="jt-control">
+          <label for="jt_output_pgvg">PG/VG <span id="jt_output_pgvg_disp"></span></label>
+          <input type="range" id="jt_output_pgvg" min="0" max="100" step="1" value="40">
+        </div>
+      </div>
+      <div class="jt-info">Your required <span class="jt_outvol_disp"></span> juice will contain&nbsp; <span id="jt_output_details"></span></div>
+    </div>
+
+    <div class="psycho-divider"></div>
+
+    <div class="jt-section" style="border-bottom:none;">
+      <div class="jt-subtitle">③ To make desired juice…</div>
+      <ul class="jt-result-list">
+        <li>
+          <span class="jt-result-label">Use</span>
+          <span class="jt-result-value" id="jt_res_vol"></span>
+          <span style="font-size:10px;color:var(--text-dim);">of juice from ①, containing</span>
+          <span class="jt-result-value" id="jt_res_input_detail"></span>
+        </li>
+        <li><span class="jt-result-label">Add PG</span><span class="jt-result-value" id="jt_res_pg"></span></li>
+        <li><span class="jt-result-label">Add VG</span><span class="jt-result-value" id="jt_res_vg"></span></li>
+        <li><span class="jt-result-label">Add Deems</span><span class="jt-result-value" id="jt_res_deems"></span></li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function showApp(which) {
+  document.getElementById('panel-wire').classList.toggle('visible', which === 'wire');
+  document.getElementById('panel-juice').classList.toggle('visible', which === 'juice');
+  document.getElementById('panel-transform').classList.toggle('visible', which === 'transform');
+  const tw = document.getElementById('appTabWire');
+  const tj = document.getElementById('appTabJuice');
+  const tt = document.getElementById('appTabTransform');
+  tw.className = 'app-tab' + (which === 'wire'      ? ' active-wire'      : '');
+  tj.className = 'app-tab' + (which === 'juice'     ? ' active-juice'     : '');
+  tt.className = 'app-tab' + (which === 'transform' ? ' active-transform' : '');
+}
+
+let WATTS_PER_MMSQARED = 0.343;
+let wireWidthmm  = 0;
+let wireHeightmm = 0;
+
+const tankMap = new Map([
+  ["Arbiter 2 (7.0mm)", 7.0], ["Arbiter Solo (4.5mm)", 4.5],
+  ["Berserker V2/V2 Mini (4.5mm)", 4.5], ["Blaze Solo V1 & V2 (6.5mm)", 6.5],
+  ["Blotto V1/Mini (7.5mm)", 7.5], ["Dead Rabbit V1 (7.0mm)", 7.0],
+  ["Dead Rabbit V3 (7.5mm)", 7.5], ["Dead Rabbit Solo (7.0mm)", 7.0],
+  ["Destiny (8.5mm)", 8.5], ["Kylin Mini V2 (10.0mm)", 10.0],
+  ["Kylin V3 (9.5mm)", 9.5], ["Merlin Mini (8.5mm)", 8.5],
+  ["Siren V2 MTL (3.5mm)", 3.5], ["Steam Crave Meson (7.0mm)", 7.0],
+  ["Zeus X (7.0mm)", 7.0]
+]);
+const tankSel = document.getElementById('tankGaps');
+tankMap.forEach((v, k) => tankSel.add(new Option(k, v)));
+tankSel.selectedIndex = 6;
+
+function awgToMm(awg) { return 0.127 * Math.pow(92, (36 - awg) / 39); }
+
+function activateRound() {
+  document.getElementById('tab-mc').classList.remove('active');
+  document.getElementById('tab-rw').classList.add('active');
+  document.getElementById('mc-section').style.display = 'none';
+  document.getElementById('rw-section').style.display = 'block';
+  wCalculate();
+}
+function activateMC() {
+  document.getElementById('tab-rw').classList.remove('active');
+  document.getElementById('tab-mc').classList.add('active');
+  document.getElementById('rw-section').style.display = 'none';
+  document.getElementById('mc-section').style.display = 'block';
+  wCalculate();
+}
+function isMC() { return document.getElementById('tab-mc').classList.contains('active'); }
+
+function wCalculate() {
+  document.getElementById('wattBtn').textContent = WATTS_PER_MMSQARED + ' W/mm²';
+  if (isMC()) wCalcMultiCore(); else wCalcRound();
+  wCalcPhysical();
+}
+function wCalcMultiCore() {
+  const cores   = parseInt(document.getElementById('numberCores').value);
+  const coreAWG = parseInt(document.getElementById('coreAWG').value);
+  const kAWG    = parseInt(document.getElementById('kernelAWG').value);
+  wireWidthmm  = awgToMm(coreAWG) * cores + 2 * awgToMm(kAWG);
+  wireHeightmm = awgToMm(coreAWG) + 2 * awgToMm(kAWG);
+  const wraps  = parseFloat(document.getElementById('numberTurnsNew').value);
+  document.getElementById('wireName').textContent = `(${coreAWG}${cores > 1 ? '×'+cores : ''}) + ${kAWG} ${cores > 1 ? 'Fused' : ''} Clapton`;
+  document.getElementById('wireDim').textContent  = `Cross section: ${wireWidthmm.toFixed(2)}mm × ${wireHeightmm.toFixed(2)}mm`;
+  document.getElementById('res-width').textContent = (wireWidthmm * wraps).toFixed(2) + 'mm';
+  wCalcTank();
+}
+function wCalcRound() {
+  const awg = parseInt(document.getElementById('roundWireAWG').value);
+  const d   = awgToMm(awg);
+  wireWidthmm = d; wireHeightmm = d;
+  const wraps = parseFloat(document.getElementById('numberTurnsNew').value);
+  document.getElementById('wireName').textContent  = `${awg} AWG Round Wire`;
+  document.getElementById('wireDim').textContent   = `Diameter: ${d.toFixed(3)}mm`;
+  document.getElementById('res-width').textContent = (d * wraps).toFixed(2) + 'mm';
+  wCalcTank();
+}
+function wCalcPhysical() {
+  const id    = parseFloat(document.getElementById('innerDiameter').value);
+  const wraps = parseFloat(document.getElementById('numberTurnsNew').value);
+  const totalLen      = Math.PI * id * wraps + wireWidthmm * wraps;
+  const totalWithLegs = totalLen + 27;
+  const area  = totalLen * wireWidthmm;
+  const maxW  = area * WATTS_PER_MMSQARED;
+  document.getElementById('res-wick').textContent   = '~' + Math.round(area) + 'mm²';
+  document.getElementById('res-power').textContent  = '~' + (Math.round(maxW * 10) / 10) + 'W';
+  document.getElementById('res-length').textContent = '~' + Math.round(totalWithLegs) + 'mm';
+}
+function wCalcTank() {
+  const gap      = parseFloat(tankSel.value);
+  const maxWraps = Math.floor(gap / wireWidthmm);
+  const leftover = gap - maxWraps * wireWidthmm;
+  document.getElementById('tank-wraps').textContent = maxWraps;
+  document.getElementById('tank-gap').textContent   = leftover.toFixed(2) + 'mm';
+}
+function toggleWattPopup() {
+  document.getElementById('NewWattsPerMM').value = WATTS_PER_MMSQARED;
+  document.getElementById('wattPopup').classList.toggle('open');
+}
+function OkButtonClick() {
+  const v = parseFloat(document.getElementById('NewWattsPerMM').value);
+  if (!isNaN(v) && v > 0 && v <= 1) WATTS_PER_MMSQARED = v;
+  wCalculate();
+  document.getElementById('wattPopup').classList.remove('open');
+}
+document.getElementById('OKButton').addEventListener('keyup', e => { if (e.key === 'Enter') OkButtonClick(); });
+document.getElementById('NewWattsPerMM').addEventListener('keyup', e => { if (e.key === 'Enter') OkButtonClick(); });
+
+activateMC();
+
+var master_totalOutputJuiceMl = 3.0;
+var DeemsRatioNumberManuallyEntered = 0.0;
+var DRatSlider       = document.getElementById("DRat");
+var DJuiceOutSlider  = document.getElementById("DJuiceOut");
+var PgVgSlider       = document.getElementById("PGRat");
+var PGmlg_Field      = document.getElementById("PGmlgField");    PGmlg_Field.readOnly = true;
+var VGml_Field       = document.getElementById("VGmlField");     VGml_Field.readOnly = true;
+var DeemsMg_Field    = document.getElementById("DeemsmgFieldNEW"); DeemsMg_Field.readOnly = false;
+var totalJuiceLbl    = document.getElementById("total_juice_label");
+var PgVgRatioLbl     = document.getElementById("pg_ratio_label");
+var trafficLightsCell= document.getElementById("lightsImg");
+var DeemsOutMg_Slider= document.getElementById("DeemsOutMgSlider");
+var DeemsRatioTxtIn  = document.getElementById("DeemsRatioTextIn");
+
+totalJuiceLbl.innerHTML  = "Total Djuice Required <span style='color:var(--acid-yellow);text-shadow:0 0 8px var(--acid-yellow);'>" + (DJuiceOutSlider.value/10.0).toFixed(1) + "ml</span>";
+DeemsRatioTxtIn.value    = "1:" + (DRatSlider.value / 10.0);
+PgVgRatioLbl.innerHTML   = "PG/VG <span style='color:var(--acid-yellow);text-shadow:0 0 8px var(--acid-yellow);'>(" + (100-PgVgSlider.value) + "/" + PgVgSlider.value + ")</span>";
+
+DJuiceOutSlider.oninput  = function() { master_totalOutputJuiceMl = this.value / 10.0; jCalculate(); };
+DRatSlider.oninput       = function() { DeemsRatioTxtIn.value = "1:" + (this.value / 10.0); jCalculate(); };
+PgVgSlider.oninput       = function() { PgVgRatioLbl.innerHTML = "PG/VG <span style='color:var(--acid-yellow);text-shadow:0 0 8px var(--acid-yellow);'>(" + (100-this.value) + "/" + this.value + ")</span>"; jCalculate(); };
+DeemsOutMg_Slider.oninput= function() { jCalcFromDeemsSlider(); };
+DeemsMg_Field.oninput    = function() { jCalcFromDeemsField(); };
+
+jCalculate();
+
+function jCalculate() {
+  var deemyRatio = 0;
+  if (DeemsRatioNumberManuallyEntered == 0) {
+    deemyRatio = parseFloat(DeemsRatioTxtIn.value.substring(2));
+    if (isNaN(deemyRatio)) { DeemsRatioTxtIn.value = "1:" + (DRatSlider.value/10.0); deemyRatio = DRatSlider.value/10.0; }
+  } else {
+    deemyRatio = DeemsRatioNumberManuallyEntered;
+    DeemsRatioNumberManuallyEntered = 0;
+    DRatSlider.value = deemyRatio * 10;
+  }
+  var pgRatio = 100 - PgVgSlider.value;
+  var totalInputJuiceMl = master_totalOutputJuiceMl / ((0.95 / deemyRatio) + 1.0);
+  var pgMl = (pgRatio / 100.0) * totalInputJuiceMl;
+  var pgG  = pgMl * 1.036;
+  totalJuiceLbl.innerHTML = "Total Djuice Required <span style='color:var(--acid-yellow);text-shadow:0 0 8px var(--acid-yellow);'>" + master_totalOutputJuiceMl.toFixed(1) + "ml</span>";
+  PGmlg_Field.value = pgMl.toFixed(2) + "ml  (" + pgG.toFixed(2) + "g)";
+  var vgMl = totalInputJuiceMl - pgMl;
+  var vgG  = vgMl * 1.261;
+  VGml_Field.value = vgMl.toFixed(2) + "ml  (" + vgG.toFixed(2) + "g)";
+  var deemsWeightMg = totalInputJuiceMl * 1000 / deemyRatio;
+  DeemsMg_Field.value = " " + deemsWeightMg.toFixed(0);
+  DeemsOutMg_Slider.value = deemsWeightMg / 10;
+  var pgSol = deemsWeightMg / (pgMl * 1000);
+  if (pgSol > 2.0) {
+    trafficLightsCell.innerHTML = `<span style="display:block;font-family:'Bungee',cursive;font-size:13px;color:#ff2020;text-shadow:0 0 12px #ff2020,0 0 24px rgba(255,0,0,0.5);letter-spacing:1px;">INSOLUBLE</span><span style="font-size:24px;color:#ff2020;text-shadow:0 0 14px #ff2020;">&#x2718;</span>`;
+  } else if ((pgSol > 1.2) && (pgSol <= 2.0) && (pgRatio < 40)) {
+    trafficLightsCell.innerHTML = `<span style="display:block;font-family:'Bungee',cursive;font-size:11px;color:var(--acid-orange);text-shadow:0 0 10px var(--acid-orange);letter-spacing:1px;line-height:1.3;">PARTIAL<br>INSOLUBLE</span>`;
+  } else {
+    trafficLightsCell.innerHTML = `<span style="display:block;font-family:'Bungee',cursive;font-size:13px;color:var(--acid-green);text-shadow:0 0 12px var(--acid-green),0 0 24px rgba(57,255,20,0.5);letter-spacing:1px;">SOLUBLE</span><span style="font-size:24px;color:var(--acid-green);text-shadow:0 0 14px var(--acid-green);">&#x2714;</span>`;
+  }
+  let totalJuiceWeight = (deemsWeightMg/1000.0) + parseFloat(pgG.toFixed(2)) + parseFloat(vgG.toFixed(2));
+  document.getElementById('totalWeightField').innerHTML = `<span style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-dim);">Total weight → </span><span style="font-family:'Bungee',cursive;font-size:14px;color:var(--acid-yellow);text-shadow:0 0 10px var(--acid-yellow);">${totalJuiceWeight.toFixed(2)}g</span>`;
+}
+
+function jCalcFromDeemsSlider(Dweight_mg) {
+  let deemsWeightMg = (Dweight_mg != null) ? Dweight_mg : DeemsOutMg_Slider.value * 10;
+  if (Dweight_mg != null) DeemsOutMg_Slider.value = deemsWeightMg / 10;
+  else DeemsMg_Field.value = " " + deemsWeightMg;
+  let PGRatio = 100 - PgVgSlider.value;
+  let deemyRatio = parseFloat(DeemsRatioTxtIn.value.substring(2));
+  if (isNaN(deemyRatio)) { DeemsRatioTxtIn.value = "1:" + (DRatSlider.value/10.0); deemyRatio = DRatSlider.value/10.0; }
+  master_totalOutputJuiceMl = (deemsWeightMg * (deemyRatio + 0.95)) / 1000.0;
+  DJuiceOutSlider.value = master_totalOutputJuiceMl * 10.0;
+  totalJuiceLbl.innerHTML = "Total Djuice Required <span style='color:var(--acid-yellow);text-shadow:0 0 8px var(--acid-yellow);'>" + master_totalOutputJuiceMl.toFixed(1) + "ml</span>";
+  let TIJ_ml = master_totalOutputJuiceMl / ((0.95 / deemyRatio) + 1.0);
+  let pgMl = (PGRatio/100.0) * TIJ_ml; let pgG = pgMl * 1.036;
+  PGmlg_Field.value = pgMl.toFixed(2) + "ml  (" + pgG.toFixed(2) + "g)";
+  let vgMl = TIJ_ml - pgMl; let vgG = vgMl * 1.261;
+  VGml_Field.value = vgMl.toFixed(2) + "ml  (" + vgG.toFixed(2) + "g)";
+  let totalJuiceWeight = (deemsWeightMg/1000.0) + parseFloat(pgG.toFixed(2)) + parseFloat(vgG.toFixed(2));
+  document.getElementById('totalWeightField').innerHTML = `<span style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-dim);">Total weight → </span><span style="font-family:'Bungee',cursive;font-size:14px;color:var(--acid-yellow);text-shadow:0 0 10px var(--acid-yellow);">${totalJuiceWeight.toFixed(2)}g</span>`;
+  DeemsRatioTxtIn.value = "1:" + deemyRatio;
+}
+function jCalcFromDeemsField() {
+  if (!onlyDigits(DeemsMg_Field.value)) { DeemsMg_Field.value = "-"; return; }
+  jCalcFromDeemsSlider(DeemsMg_Field.value);
+}
+function onlyDigits(s) {
+  s = s.trim();
+  for (let i = s.length-1; i >= 0; i--) { const d = s.charCodeAt(i); if (d<48||d>57) return false; }
+  return true;
+}
+function calculateFromDRatioText(source) {
+  if (DeemsRatioTxtIn.value.length < 2) { DeemsRatioTxtIn.value = "1:"; return; }
+  let txt = DeemsRatioTxtIn.value.substring(2);
+  if (!onlyDigits(txt)) { DeemsRatioTxtIn.value = DeemsRatioTxtIn.value.slice(0,-1); return; }
+  let dr = parseInt(txt);
+  if (dr == 0) { DeemsRatioTxtIn.value = "1:"; return; }
+  if (isNaN(dr)) { PGmlg_Field.value=" ?"; VGml_Field.value=" ?"; DeemsMg_Field.value=" ?"; return; }
+  DeemsRatioNumberManuallyEntered = dr;
+  jCalculate();
+}
+
+var modal = document.getElementById("myModal");
+var btn   = document.getElementById("helpButton");
+var spanX = document.getElementsByClassName("close")[0];
+btn.onclick  = () => modal.style.display = "block";
+spanX.onclick= () => modal.style.display = "none";
+window.onclick = e => { if (e.target == modal) modal.style.display = "none"; };
+
+(function() {
+  function jtValSpan(txt) { return `<span style="color:var(--acid-yellow);text-shadow:0 0 8px var(--acid-yellow);font-weight:bold;">${txt}</span>`; }
+  function jtDimSpan(txt) { return `<span style="font-size:11px;color:var(--text-dim);">${txt}</span>`; }
+
+  const jt_in_vol   = document.getElementById('jt_input_volume');
+  const jt_in_drat  = document.getElementById('jt_input_dratio');
+  const jt_in_pgvg  = document.getElementById('jt_input_pgvg');
+  const jt_out_vol  = document.getElementById('jt_output_volume');
+  const jt_out_drat = document.getElementById('jt_output_dratio');
+  const jt_out_pgvg = document.getElementById('jt_output_pgvg');
+
+  function jtSync(slider, dispId, classDisps, fmt) {
+    const val = parseFloat(slider.value);
+    const html = jtValSpan(fmt(val));
+    if (dispId) document.getElementById(dispId).innerHTML = html;
+    if (classDisps) [...document.getElementsByClassName(classDisps)].forEach(el => el.innerHTML = html);
+  }
+
+  function calcPerMl(totalVol, dRatio, pgRatio) {
+    const deemsWeight_mg = totalVol / (dRatio + 0.95);
+    const deemsVol       = deemsWeight_mg * 0.95;
+    const inputJuiceVol  = totalVol - deemsVol;
+    const vgVol = inputJuiceVol * pgRatio;
+    const pgVol = inputJuiceVol * (1 - pgRatio);
+    return { volume: totalVol, pgPerMl: pgVol/totalVol, vgPerMl: vgVol/totalVol, deemsPerMl: deemsWeight_mg/totalVol };
+  }
+
+  function jtUpdate() {
+    const inp = calcPerMl(parseFloat(jt_in_vol.value), parseFloat(jt_in_drat.value), parseFloat(jt_in_pgvg.value)/100);
+    document.getElementById('jt_input_details').innerHTML =
+      jtValSpan(`PG=${inp.pgPerMl.toFixed(2)}ml`) + jtDimSpan(' · ') +
+      jtValSpan(`VG=${inp.vgPerMl.toFixed(2)}ml`) + jtDimSpan(' · ') +
+      jtValSpan(`deems=${(inp.deemsPerMl*1000).toFixed(0)}mg`);
+
+    const out = calcPerMl(parseFloat(jt_out_vol.value), parseFloat(jt_out_drat.value), parseFloat(jt_out_pgvg.value)/100);
+    const outPg    = out.pgPerMl * out.volume;
+    const outVg    = out.vgPerMl * out.volume;
+    const outDeems = out.deemsPerMl * out.volume;
+
+    const pgSol = outDeems / outPg;
+    let solHTML = '';
+    if      (pgSol > 2.0)                                                     solHTML = `<br><span class="sol-bad">⚠ NOT SOLUBLE ⚠</span>`;
+    else if (pgSol > 1.2 && pgSol <= 2.0 && (100 - jt_out_pgvg.value) < 40)  solHTML = `<br><span class="sol-warn">⚠ MAY NOT DISSOLVE</span>`;
+    else                                                                        solHTML = `<br><span class="sol-ok">✔ SOLUBLE</span>`;
+
+    document.getElementById('jt_output_details').innerHTML =
+      jtValSpan(`PG=${outPg.toFixed(2)}ml`) + jtDimSpan(' · ') +
+      jtValSpan(`VG=${outVg.toFixed(2)}ml`) + jtDimSpan(' · ') +
+      jtValSpan(`deems=${(outDeems*1000).toFixed(0)}mg`) + solHTML;
+
+    let inJuiceMl = Math.min(outDeems / inp.deemsPerMl, inp.volume);
+    let pgAdd = outPg - inJuiceMl * inp.pgPerMl;
+    if (pgAdd < 0) inJuiceMl = Math.min(outPg / inp.pgPerMl, inp.volume);
+    let vgAdd = outVg - inJuiceMl * inp.vgPerMl;
+    if (vgAdd < 0) inJuiceMl = Math.min(outVg / inp.vgPerMl, inp.volume);
+
+    pgAdd = outPg - inJuiceMl * inp.pgPerMl;
+    vgAdd = outVg - inJuiceMl * inp.vgPerMl;
+    const deemsAdd  = outDeems - inJuiceMl * inp.deemsPerMl;
+    const inJuiceWt = (1.036*(inJuiceMl*inp.pgPerMl)) + (1.261*(inJuiceMl*inp.vgPerMl)) + (inJuiceMl*inp.deemsPerMl);
+
+    document.getElementById('jt_res_vol').innerHTML = `${inJuiceMl.toFixed(2)}ml` + jtDimSpan(` (${inJuiceWt.toFixed(2)}g)`);
+    document.getElementById('jt_res_input_detail').innerHTML =
+      jtValSpan(`PG=${(inJuiceMl*inp.pgPerMl).toFixed(2)}ml`) + jtDimSpan(' · ') +
+      jtValSpan(`VG=${(inJuiceMl*inp.vgPerMl).toFixed(2)}ml`) + jtDimSpan(' · ') +
+      jtValSpan(`deems=${(inJuiceMl*inp.deemsPerMl*1000).toFixed(0)}mg`);
+    document.getElementById('jt_res_pg').innerHTML    = `${pgAdd.toFixed(2)}ml` + jtDimSpan(` (${(pgAdd*1.036).toFixed(2)}g)`);
+    document.getElementById('jt_res_vg').innerHTML    = `${vgAdd.toFixed(2)}ml` + jtDimSpan(` (${(vgAdd*1.261).toFixed(2)}g)`);
+    document.getElementById('jt_res_deems').innerHTML = `${(deemsAdd*1000).toFixed(0)}mg`;
+  }
+
+  jt_in_vol.addEventListener('input',  e => { jtSync(e.target,'jt_input_vol_disp',null,v=>`${v}ml`); jtUpdate(); });
+  jt_in_drat.addEventListener('input', e => { jtSync(e.target,'jt_input_dratio_disp',null,v=>`1:${v}`); jtUpdate(); });
+  jt_in_pgvg.addEventListener('input', e => { jtSync(e.target,'jt_input_pgvg_disp',null,v=>`${100-v}/${v}`); jtUpdate(); });
+  jt_out_vol.addEventListener('input',  e => { jtSync(e.target,'jt_output_dratio_disp','jt_outvol_disp',v=>`${v}ml`); jtUpdate(); });
+  jt_out_drat.addEventListener('input', e => { jtSync(e.target,'jt_output_dratio_disp',null,v=>`1:${v}`); jtUpdate(); });
+  jt_out_pgvg.addEventListener('input', e => { jtSync(e.target,'jt_output_pgvg_disp',null,v=>`${100-v}/${v}`); jtUpdate(); });
+
+  [jt_in_vol,jt_in_drat,jt_in_pgvg,jt_out_vol,jt_out_drat,jt_out_pgvg].forEach(s => s.dispatchEvent(new Event('input')));
+})();
+
+(function() {
+  const colors = ['#ff00cc','#00ffee','#ffee00','#39ff14','#ff6600','#cc00ff'];
+  let idx = 0;
+  document.addEventListener('mousemove', function(e) {
+    const dot = document.createElement('div');
+    dot.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:6px;height:6px;border-radius:50%;background:${colors[idx%colors.length]};box-shadow:0 0 8px ${colors[idx%colors.length]};pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:opacity 0.5s,transform 0.5s;`;
+    document.body.appendChild(dot);
+    idx++;
+    setTimeout(() => { dot.style.opacity='0'; dot.style.transform='translate(-50%,-50%) scale(2)'; }, 50);
+    setTimeout(() => dot.remove(), 600);
+  });
+})();
+
+</script>
+</body>
+</html>
